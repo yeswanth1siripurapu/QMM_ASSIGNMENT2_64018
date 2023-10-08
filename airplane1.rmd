@@ -1,0 +1,126 @@
+---
+title: "QMM_ASSIGNMENT2"
+author: "Yeswanth Siripurapu"
+date: "2023-10-02"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+#This notebook contains the code for Assignment The Transportation Model
+
+#Summary:
+#1.Object: *The LP model is used to estimate an optimal total cost, which 
+#represents the lowest cost the linear program with 20 decision variables and
+#9 constraints 
+#One of the limitations in month 1 is actually around ten engines which Northern
+#Aeroplane Company may encounter when fulfilling contractual responsibilities.
+#This indicates that just 10 units are produced on a minimum cumulative basis in
+#month.
+#1. An accumulation of output to satisfy constraint number two, a requirement of
+#25 engines must be met in month.
+#2. This restriction establishes a minimum50 engines must be produced overall in
+#month 3 as a requirement. This restriction calls for the bare minimal.The total
+#number of engines produced in month four will be 70.
+#2.Sensitivity Analysis for the Objective Function: * Using the sensitivity 
+#analysis, we can determine how changes in the price of production and storage 
+#will affect the overall cost. Making educated decisionsregarding costmanagement
+#will be made easier if you experiment with production cost coefficients and 
+#monthly storage charges to see how they effect minimum total cost.
+#3. LP offers a manufacturing and storage strategy that is cost-effective and
+#satisfies contractual requirements. A sensitivity analysis demonstrates how 
+#modifications to important variables affect the expenses related to varying 
+#production levels. Shadow pricing offer information on the effects of changing 
+#production levels.
+#More detailson the sensitivity ofthe objective function to changes in objective
+#coefficients are revealed by reduced costs. Northern Aeroplane Company has the
+#capacity to strategic decisions regarding engineproduction and storage based on
+#this information.
+
+#Load lpSolveAPI
+
+```{r}
+library(lpSolveAPI)
+```
+
+#Problem Statement: The NORTHERN AIRPLANE COMPANY builds commercial airplanes 
+#for various airline companies around the world.The last stage in the production
+#process is to produce the jetengines and then to install them a very fast
+#operation in the completed airplane frame. The company has been working
+#under some contracts to deliver a considerable number of airplanes in the near 
+#future, and the production of the jet engines for these planes must now be 
+#scheduled for the next four months. To meet the contracted dates for delivery,
+#the company must supply engines for installation in the  quantities indicated 
+#in the second column of Table 9.7. Thus, the cumulative number of engines 
+#produced by the end of months 1, 2, 3, and 4 must be at least 10, 25, 50,and 70
+#respectively. The facilities that will be available for producing the
+#engines vary according to other production, maintenance, and renovation work
+#scheduled during this period.The resulting monthly differences in the maximum
+#number that can be produced and the cost (in millions of dollars) of producing 
+#each one are given in the third and fourth columns of Table 9.7 
+#Because of the variations in production costs, it may well be worthwhile to 
+#produce some of the engines a month or more before they are scheduled for 
+#installation, and this possibility is being considered. The drawback is that 
+#such engines must be stored until the scheduled installation (the airplane
+#frames will not 1 be ready early) at a storage cost of $15,000 permonth foreach
+#engine,1 as shown in the rightmost column of Table 9.7.The production manager
+#wants a schedule developed for the number of engines to be produced in each of
+#the four months so that total of the production& storage costs will be minimized.
+#Formulate and solve this problem. Submit a final pdf knitted file with your 
+#recommendations
+
+
+#We now read the lp formulation using an lp file. To read about about the lp format for files, you can readthe documentation at http://lpsolve.sourceforge.net/5.5/lp-format.html
+
+```{r}
+
+x<-read.lp("Northern Airplane Co.lp")
+x
+```
+#Solve the lp model
+
+```{r}
+solve(x)
+```
+# get objective value
+
+```{r}
+get.objective(x)
+```
+#get shadow prices
+
+```{r}
+get.sensitivity.rhs(x) 
+```
+
+# get constraint RHS values
+```{r}
+get.constraints(x) 
+
+```
+
+#get values of decision variables
+
+```{r}
+get.variables(x)
+
+```
+
+# Retrieve the sensitivity of the objective function
+```{r}
+get.sensitivity.objex(x)
+
+```
+
+# get reduced cost
+
+```{r}
+get.sensitivity.obj(x)
+
+```
+
+
+
+
+
+
